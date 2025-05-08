@@ -1,12 +1,15 @@
 package com.example.landingtracker;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -18,8 +21,13 @@ public class MainActivity extends BridgeActivity {
     private static final String DEVICE_ADDRESS = "00:00:00:00:00:00";
 
     @Override
+    @SuppressLint("MissingInflatedId")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
         bleManager = new BLEManager(this);
 
         if (!bleManager.isBluetoothSupported(this)) {
@@ -41,12 +49,16 @@ public class MainActivity extends BridgeActivity {
                 }
             }
         });
-        app.addContentView(scanButton,new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+        layout.addView(scanButton);
+
         Button connectButton = new Button(this);
         connectButton.setText("connect");
         connectButton.setOnClickListener(v -> {
             bleManager.connectToDevice(DEVICE_ADDRESS, this);
         });
-        app.addContentView(connectButton,new android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+        layout.addView(connectButton);
+
+        setContentView(layout);
     }
+
 }
