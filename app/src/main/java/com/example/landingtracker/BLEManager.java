@@ -1,5 +1,6 @@
 package com.example.landingtracker;
 
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -23,6 +24,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 
 public class BLEManager {
     private static final String TAG = BLEManager.class.getSimpleName();
@@ -51,7 +53,8 @@ public class BLEManager {
             } else {
                 Log.w(TAG, "onServicesDiscovered: Service discovery failed.");
             }
-        }
+          }
+
     };
     private ScanCallback leScanCallback = new ScanCallback() {
         @Override
@@ -111,6 +114,7 @@ public class BLEManager {
         }
     }
 
+
     private List<ScanFilter> getScanFilters() {
         List<ScanFilter> scanFilters = new ArrayList<>();
         ScanFilter.Builder builder = new ScanFilter.Builder();
@@ -118,6 +122,7 @@ public class BLEManager {
         scanFilters.add(builder.build());
         return scanFilters;
     }
+
 
     private ScanSettings getScanSettings() {
         ScanSettings.Builder settingsBuilder = new ScanSettings.Builder();
@@ -128,6 +133,7 @@ public class BLEManager {
         return settingsBuilder.build();
     }
 
+
     public boolean connectToDevice(String address, Context context) {
         BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
         if (device != null) {
@@ -137,6 +143,7 @@ public class BLEManager {
         }
         return false;
     }
+
 
     public void disconnectDevice() {
         if (bluetoothGatt != null && connectedDevice != null) {
